@@ -1,6 +1,11 @@
 {
   "expo": {
-    "name": "Blank Template",
+    "androidStatusBarColor": "#334393",
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#334393"
+    },
+    "name": "Chefable",
     "slug": "expo-template-blank",
     "privacy": "public",
     "sdkVersion": "31.0.0",
@@ -16,9 +21,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     }

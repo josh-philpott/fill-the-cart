@@ -1,15 +1,17 @@
 import React, { Component } from "react"
-import { FlatList, View, SafeAreaView, Text } from "react-native"
+import { View, Text, Button, StyleSheet } from "react-native"
+import { createStackNavigator, createAppContainer } from "react-navigation"
+import DetailsScreen from "./src/details"
+import ShoppingListScreen from "./src/shoppingList"
 
-export default class AwkwardScrollingImageWithText extends Component {
-  render() {
-    return (
-      <SafeAreaView>
-        <FlatList
-          data={[{ key: "a" }, { key: "b" }]}
-          renderItem={({ item }) => <Text>{item.key}</Text>}
-        />
-      </SafeAreaView>
-    )
+const AppNavigator = createStackNavigator(
+  {
+    ShoppingList: ShoppingListScreen,
+    Details: DetailsScreen
+  },
+  {
+    initialRouteName: "ShoppingList"
   }
-}
+)
+
+export default createAppContainer(AppNavigator)
