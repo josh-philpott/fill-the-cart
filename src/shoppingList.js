@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { StyleSheet, StatusBar } from "react-native"
+import { StyleSheet, StatusBar, View } from "react-native"
 import {
   Container,
   Header,
@@ -30,7 +30,31 @@ export default class ShoppingListScreen extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { loading: true }
+    this.state = {
+      loading: true,
+      ingredients: {
+        Produce: [
+          "1 Shallot",
+          "2 Carrots",
+          "2 Zucchini",
+          "Sliced Mushrooms (~8oz)"
+        ],
+        Meat: ["Ground Turkey (1 lb)"],
+        Pantry: [
+          "Soy Sauce",
+          "Rice Vinegar",
+          "Brown Sugar",
+          "Jasmine Rice",
+          "Ice Cream"
+        ],
+        Freezer: [
+          "Ice Cream",
+          "Toaster Streudels (for doodles)",
+          "Jimmy Dean Sausage Bisquits (for Mary)",
+          "Jam (what's the difference between jelly and jam)"
+        ]
+      }
+    }
   }
 
   async componentWillMount() {
@@ -42,29 +66,6 @@ export default class ShoppingListScreen extends Component {
   }
 
   render() {
-    const ingredients = {
-      produce: [
-        "1 Shallot",
-        "2 Carrots",
-        "2 Zucchini",
-        "Sliced Mushrooms (~8oz)"
-      ],
-      meat: ["Ground Turkey (1 lb)"],
-      pantry: [
-        "Soy Sauce",
-        "Rice Vinegar",
-        "Brown Sugar",
-        "Jasmine Rice",
-        "Ice Cream"
-      ],
-      freezer: [
-        "Ice Cream",
-        "Toaster Streudels (for doodles)",
-        "Jimmy Dean Sausage Bisquits (for Mary)",
-        "Jam (what's the difference between jelly and jam)"
-      ]
-    }
-
     if (this.state.loading) {
       return (
         <Container>
@@ -76,66 +77,31 @@ export default class ShoppingListScreen extends Component {
       <Container style={{ marginTop: StatusBar.currentHeight }}>
         <Header>
           <Body>
-            <Title>Mary's Little Shopping List</Title>
+            <Title>Shopping List</Title>
           </Body>
         </Header>
-
         <Content>
-          <Separator bordered>
-            <Text style={{ fontSize: 16 }}>Produce</Text>
-          </Separator>
-          {ingredients.produce.map(item => {
-            return (
-              <ListItem>
-                <CheckBox checked={false} />
-                <Body>
-                  <Text>{item}</Text>
-                </Body>
-              </ListItem>
-            )
-          })}
-
-          <Separator bordered>
-            <Text style={{ fontSize: 16 }}>Meat</Text>
-          </Separator>
-          {ingredients.meat.map(item => {
-            return (
-              <ListItem>
-                <CheckBox checked={false} />
-                <Body>
-                  <Text>{item}</Text>
-                </Body>
-              </ListItem>
-            )
-          })}
-
-          <Separator bordered>
-            <Text style={{ fontSize: 16 }}>Pantry</Text>
-          </Separator>
-          {ingredients.pantry.map(item => {
-            return (
-              <ListItem>
-                <CheckBox checked={false} />
-                <Body>
-                  <Text>{item}</Text>
-                </Body>
-              </ListItem>
-            )
-          })}
-
-          <Separator bordered>
-            <Text style={{ fontSize: 16 }}>Freezer</Text>
-          </Separator>
-          {ingredients.freezer.map(item => {
-            return (
-              <ListItem>
-                <CheckBox checked={false} />
-                <Body>
-                  <Text>{item}</Text>
-                </Body>
-              </ListItem>
-            )
-          })}
+          {Object.keys(this.state.ingredients).map(
+            (category, categoryIndex) => {
+              return (
+                <View key={categoryIndex}>
+                  <Separator key={categoryIndex} bordered>
+                    <Text style={{ fontSize: 16 }}>{category}</Text>
+                  </Separator>
+                  {this.state.ingredients[category].map((item, itemIndex) => {
+                    return (
+                      <ListItem key={itemIndex}>
+                        <CheckBox checked={true} />
+                        <Body>
+                          <Text>{item}</Text>
+                        </Body>
+                      </ListItem>
+                    )
+                  })}
+                </View>
+              )
+            }
+          )}
         </Content>
       </Container>
     )
