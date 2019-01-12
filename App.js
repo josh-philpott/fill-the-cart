@@ -1,5 +1,5 @@
 import { createStackNavigator, createAppContainer } from "react-navigation"
-import ShoppingListScreen from "./src/components/ShoppingList/shoppingList"
+import ShoppingListScreen from "./src/components/ShoppingList/ShoppingList"
 
 const AppNavigator = createStackNavigator(
   {

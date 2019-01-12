@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { StyleSheet, StatusBar, View, SectionList } from "react-native"
+import { SectionList } from "react-native"
 import {
   Container,
   Header,
@@ -10,7 +10,8 @@ import {
   Separator
 } from "native-base"
 import { Font, AppLoading } from "expo"
-import ShoppingListItem from "./shoppingListItem"
+import ShoppingListItem from "./ShoppingListItem"
+import AddItem from "./AddItem"
 
 export default class ShoppingListScreen extends Component {
   static navigationOptions = {
@@ -73,6 +74,8 @@ export default class ShoppingListScreen extends Component {
           </Body>
         </Header>
         <Content>
+          <AddItem />
+
           <SectionList
             sections={this.state.sections}
             renderSectionHeader={({ section: { title } }) => (
