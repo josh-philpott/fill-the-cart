@@ -34,24 +34,27 @@ export default class ShoppingListScreen extends Component {
       loading: true,
       ingredients: {
         Produce: [
-          "1 Shallot",
-          "2 Carrots",
-          "2 Zucchini",
-          "Sliced Mushrooms (~8oz)"
+          { item: "1 Shallot", checked: false },
+          { item: "2 Carrots", checked: false },
+          { item: "2 Zucchini", checked: false },
+          { item: "Sliced Mushrooms (~8oz)", checked: false }
         ],
-        Meat: ["Ground Turkey (1 lb)"],
+        Meat: [{ item: "Ground Turkey (1 lb)", checked: false }],
         Pantry: [
-          "Soy Sauce",
-          "Rice Vinegar",
-          "Brown Sugar",
-          "Jasmine Rice",
-          "Ice Cream"
+          { item: "Soy Sauce", checked: false },
+          { item: "Rice Vinegar", checked: false },
+          { item: "Brown Sugar", checked: false },
+          { item: "Jasmine Rice", checked: false },
+          { item: "Ice Cream", checked: false }
         ],
         Freezer: [
-          "Ice Cream",
-          "Toaster Streudels (for doodles)",
-          "Jimmy Dean Sausage Bisquits (for Mary)",
-          "Jam (what's the difference between jelly and jam)"
+          { item: "Ice Cream", checked: false },
+          { item: "Toaster Streudels (for doodles)", checked: false },
+          { item: "Jimmy Dean Sausage Bisquits (for Mary)", checked: false },
+          {
+            item: "Jam (what's the difference between jelly and jam)",
+            checked: true
+          }
         ]
       }
     }
@@ -62,7 +65,7 @@ export default class ShoppingListScreen extends Component {
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     })
-    this.setState({ loading: false })
+    this.setState({ ...this.state, loading: false })
   }
 
   render() {
@@ -81,6 +84,11 @@ export default class ShoppingListScreen extends Component {
           </Body>
         </Header>
         <Content>
+
+<List dataArray={ingredients}>
+
+</List>
+        
           {Object.keys(this.state.ingredients).map(
             (category, categoryIndex) => {
               return (
@@ -91,9 +99,9 @@ export default class ShoppingListScreen extends Component {
                   {this.state.ingredients[category].map((item, itemIndex) => {
                     return (
                       <ListItem key={itemIndex}>
-                        <CheckBox checked={true} />
+                        <CheckBox checked={item.checked} />
                         <Body>
-                          <Text>{item}</Text>
+                          <Text>{item.item}</Text>
                         </Body>
                       </ListItem>
                     )
