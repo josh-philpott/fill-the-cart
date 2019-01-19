@@ -31,7 +31,6 @@ export default class AddItem extends React.Component<Props, State> {
       category: this.state.selected,
       inCart: false
     }
-    console.log(`Submit ${item}`)
     this.props.onAddItem(item)
   }
 

@@ -20,7 +20,6 @@ export default class ShoppingListItem extends React.Component<Props, State> {
   }
 
   handleCheckClick() {
-    console.log("clicked check box", this.state)
     this.setState({ checked: !this.state.checked })
     //give a little bit for the check animation to start
     setTimeout(() => {

@@ -113,7 +113,6 @@ export default class ShoppingList extends React.Component<Props, State> {
             />
           )}
           keyExtractor={item => {
-            console.log(item.id)
             return item.id
           }}
         />
