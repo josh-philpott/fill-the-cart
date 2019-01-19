@@ -1,15 +1,21 @@
-import React, { Component } from "react"
-import { Input, Row, Col, Grid, Picker, Button, Text, View } from "native-base"
+import React from "react"
+import { Input, Picker, Button, Text, View } from "native-base"
 
-export default class AddItem extends Component {
-  constructor(props) {
+export interface Props {}
+
+interface State {
+  selected: string
+}
+
+export default class AddItem extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       selected: "Produce"
     }
   }
 
-  onValueChange(value) {
+  onValueChange(value: string) {
     this.setState({ selected: value })
   }
 
