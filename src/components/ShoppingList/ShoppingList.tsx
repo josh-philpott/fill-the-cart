@@ -11,14 +11,15 @@ import uuidv1 from "uuid/v1"
 export interface Props {}
 
 interface State {
-  // sections: { title: string; data: string[] }[]
   items: GroceryItem[]
+  categorySortOrder: string[]
 }
 
 export default class ShoppingList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
+      categorySortOrder: ["Produce", "Meat", "Pantry", "Other", "In Cart"],
       items: [
         {
           id: uuidv1(),
@@ -56,8 +57,7 @@ export default class ShoppingList extends React.Component<Props, State> {
           category: "Pantry",
           name: "Jasmine Rice",
           inCart: false
-        },
-        { id: uuidv1(), category: "Other", name: "Jasmine Rice", inCart: true }
+        }
       ]
     }
   }
@@ -69,10 +69,14 @@ export default class ShoppingList extends React.Component<Props, State> {
   }
 
   private getItemsByCategory(): SectionListData[] {
+    let sortOrder = this.state.categorySortOrder
     let itemsByCategoryDerived = _(this.state.items)
       .groupBy(item => (item.inCart ? "In Cart" : item.category))
       .map((value, key) => {
         return { title: key, data: value }
+      })
+      .sortBy(section => {
+        return sortOrder.indexOf(section.title)
       })
       .value()
 

@@ -44,12 +44,11 @@ export default class AddItem extends React.Component<Props, State> {
             borderRightWidth: 1,
             borderRightColor: "#555555"
           }}
-          placeholder="Add Item..."
+          placeholder="ex. 3 Bananas"
           onChangeText={text => this.setState({ text })}
         />
 
         <Picker
-          note
           mode="dropdown"
           style={{
             flex: 3
