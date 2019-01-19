@@ -79,11 +79,12 @@ export default class ShoppingList extends React.Component<Props, State> {
     return itemsByCategoryDerived
   }
 
-  private onCheck(itemKey: string): void {
+  //toggle inCart on check
+  private addRemoveFromCart(itemKey: string): void {
     //wait a bit for the check animation, grab the correct item and update inCart
     let items = this.state.items
     let foundItem = _.remove(items, { id: itemKey })[0]
-    foundItem.inCart = true
+    foundItem.inCart = !foundItem.inCart
     console.log(`found item -> ${foundItem}`)
     items.push(foundItem)
     this.setState({ items })
@@ -105,7 +106,7 @@ export default class ShoppingList extends React.Component<Props, State> {
             <ShoppingListItem
               item={item}
               checked={item.inCart}
-              onCheck={this.onCheck.bind(this)}
+              onCheck={this.addRemoveFromCart.bind(this)}
             />
           )}
           keyExtractor={item => {

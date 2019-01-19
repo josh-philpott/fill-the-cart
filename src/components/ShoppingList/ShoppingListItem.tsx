@@ -31,7 +31,10 @@ export default class ShoppingListItem extends React.Component<Props, State> {
   render() {
     return (
       <ListItem onPress={this.handleCheckClick.bind(this)}>
-        <CheckBox checked={this.state.checked} />
+        <CheckBox
+          onPress={this.handleCheckClick.bind(this)}
+          checked={this.state.checked}
+        />
         <Body>
           <Text>{this.props.item.name}</Text>
         </Body>
