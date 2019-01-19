@@ -1,7 +1,6 @@
 import React from "react"
 import { SectionList } from "react-native"
 import { Content, Text, Separator } from "native-base"
-import { Font, AppLoading } from "expo"
 
 import AddItem from "./AddItem"
 import ShoppingListItem from "./ShoppingListItem"
@@ -11,59 +10,43 @@ import _ from "lodash"
 export interface Props {}
 
 interface State {
-  sections: { title: string; data: string[] }[]
+  // sections: { title: string; data: string[] }[]
+  items: GroceryItem[]
 }
 
-export default class ShoppingListScreen extends React.Component<Props, State> {
+export default class ShoppingList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      sections: [
-        {
-          title: "Produce",
-          data: [
-            "1 Shallot",
-            "2 Carrots",
-            "2 Zucchini",
-            "Sliced Mushrooms (~8oz)"
-          ]
-        },
-        {
-          title: "Meat",
-          data: ["Ground Turkey (1 lb)"]
-        },
-        {
-          title: "Pantry",
-          data: [
-            "Soy Sauce",
-            "Rice Vinegar",
-            "Brown Sugar",
-            "Jasmine Rice",
-            "Ice Cream"
-          ]
-        },
-        {
-          title: "In Your Cart",
-          data: []
-        }
+      items: [
+        { category: "Produce", name: "1 Shallot", inCart: false },
+        { category: "Produce", name: "2 Carrots", inCart: false },
+        { category: "Meat", name: "Ground Turkey (1 lb)", inCart: false },
+        { category: "Pantry", name: "Soy Sauce", inCart: false },
+        { category: "Pantry", name: "Rice Vinegar", inCart: false },
+        { category: "Pantry", name: "Brown Sugar", inCart: false },
+        { category: "Pantry", name: "Jasmine Rice", inCart: false },
+        { category: "Other", name: "Jasmine Rice", inCart: true }
       ]
     }
   }
 
   private onAddItem(item: GroceryItem): void {
-    let sections = this.state.sections
-    const index = _.findIndex(sections, { title: item.category })
+    let items = this.state.items
+    items.push(item)
+    this.setState({ items })
+  }
 
-    if (index >= 0) {
-      const section = sections[index]
-      //add new item to the section
-      section.data.push(item.name)
-      //replace section at index
-      sections.splice(index, 1, section)
-      this.setState({
-        sections
+  private getItemsByCategory(): SectionListData[] {
+    let itemsByCategoryDerived = _(this.state.items)
+      .groupBy(item => (item.inCart ? "In Cart" : item.category))
+      .map((value, key) => {
+        let onlyNames = _.map(value, item => item.name)
+        return { title: key, data: onlyNames }
       })
-    }
+      .value()
+
+    return itemsByCategoryDerived
   }
 
   render() {
@@ -72,7 +55,7 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
         <AddItem onAddItem={this.onAddItem.bind(this)} />
 
         <SectionList
-          sections={this.state.sections}
+          sections={this.getItemsByCategory()}
           renderSectionHeader={({ section: { title } }) => (
             <Separator bordered>
               <Text style={{ fontSize: 16 }}>{title}</Text>
