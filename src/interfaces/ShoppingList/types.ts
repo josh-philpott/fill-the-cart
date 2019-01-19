@@ -1,4 +1,5 @@
 interface GroceryItem {
+  id: string
   category: string
   name: string
   inCart: boolean
@@ -10,6 +11,6 @@ interface GroceryItem {
  */
 
 interface SectionListData {
-  data: string[]
+  data: GroceryItem[]
   title: string
 }

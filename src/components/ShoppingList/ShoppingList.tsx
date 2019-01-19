@@ -6,6 +6,7 @@ import AddItem from "./AddItem"
 import ShoppingListItem from "./ShoppingListItem"
 
 import _ from "lodash"
+import uuidv1 from "uuid/v1"
 
 export interface Props {}
 
@@ -19,14 +20,44 @@ export default class ShoppingList extends React.Component<Props, State> {
     super(props)
     this.state = {
       items: [
-        { category: "Produce", name: "1 Shallot", inCart: false },
-        { category: "Produce", name: "2 Carrots", inCart: false },
-        { category: "Meat", name: "Ground Turkey (1 lb)", inCart: false },
-        { category: "Pantry", name: "Soy Sauce", inCart: false },
-        { category: "Pantry", name: "Rice Vinegar", inCart: false },
-        { category: "Pantry", name: "Brown Sugar", inCart: false },
-        { category: "Pantry", name: "Jasmine Rice", inCart: false },
-        { category: "Other", name: "Jasmine Rice", inCart: true }
+        {
+          id: uuidv1(),
+          category: "Produce",
+          name: "1 Shallot",
+          inCart: false
+        },
+        {
+          id: uuidv1(),
+          category: "Produce",
+          name: "2 Carrots",
+          inCart: false
+        },
+        {
+          id: uuidv1(),
+          category: "Meat",
+          name: "Ground Turkey (1 lb)",
+          inCart: false
+        },
+        { id: uuidv1(), category: "Pantry", name: "Soy Sauce", inCart: false },
+        {
+          id: uuidv1(),
+          category: "Pantry",
+          name: "Rice Vinegar",
+          inCart: false
+        },
+        {
+          id: uuidv1(),
+          category: "Pantry",
+          name: "Brown Sugar",
+          inCart: false
+        },
+        {
+          id: uuidv1(),
+          category: "Pantry",
+          name: "Jasmine Rice",
+          inCart: false
+        },
+        { id: uuidv1(), category: "Other", name: "Jasmine Rice", inCart: true }
       ]
     }
   }
@@ -41,12 +72,21 @@ export default class ShoppingList extends React.Component<Props, State> {
     let itemsByCategoryDerived = _(this.state.items)
       .groupBy(item => (item.inCart ? "In Cart" : item.category))
       .map((value, key) => {
-        let onlyNames = _.map(value, item => item.name)
-        return { title: key, data: onlyNames }
+        return { title: key, data: value }
       })
       .value()
 
     return itemsByCategoryDerived
+  }
+
+  private onCheck(itemKey: string): void {
+    //wait a bit for the check animation, grab the correct item and update inCart
+    let items = this.state.items
+    let foundItem = _.remove(items, { id: itemKey })[0]
+    foundItem.inCart = true
+    console.log(`found item -> ${foundItem}`)
+    items.push(foundItem)
+    this.setState({ items })
   }
 
   render() {
@@ -62,9 +102,16 @@ export default class ShoppingList extends React.Component<Props, State> {
             </Separator>
           )}
           renderItem={({ item, index }) => (
-            <ShoppingListItem item={item} index={index} />
+            <ShoppingListItem
+              item={item}
+              checked={item.inCart}
+              onCheck={this.onCheck.bind(this)}
+            />
           )}
-          keyExtractor={(item, index) => item + index}
+          keyExtractor={item => {
+            console.log(item.id)
+            return item.id
+          }}
         />
       </Content>
     )

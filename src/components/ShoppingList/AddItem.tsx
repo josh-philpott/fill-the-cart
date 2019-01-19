@@ -1,5 +1,6 @@
 import React from "react"
 import { Input, Picker, Button, Text, View } from "native-base"
+import uuidv1 from "uuid/v1"
 
 export interface Props {
   onAddItem: (item: GroceryItem) => void
@@ -25,8 +26,10 @@ export default class AddItem extends React.Component<Props, State> {
 
   submitItem() {
     let item: GroceryItem = {
+      id: uuidv1(),
       name: this.state.text,
-      category: this.state.selected
+      category: this.state.selected,
+      inCart: false
     }
     console.log(`Submit ${item}`)
     this.props.onAddItem(item)

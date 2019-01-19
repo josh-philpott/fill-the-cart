@@ -12,13 +12,15 @@
   "dependencies": {
     "@types/expo": "^31.0.8",
     "@types/lodash": "^4.14.120",
+    "@types/uuid": "^3.4.4",
     "expo": "^31.0.2",
     "lodash": "^4.17.11",
     "native-base": "^2.10.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-reanimated": "^1.0.0-alpha.11",
-    "react-navigation": "^3.0.9"
+    "react-navigation": "^3.0.9",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/react": "^16.7.20",
