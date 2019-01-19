@@ -83,14 +83,13 @@ export default class ShoppingList extends React.Component<Props, State> {
     return itemsByCategoryDerived
   }
 
-  //toggle inCart on check
+  /*
+   * Toggle inCart for checked/unchecked item
+   */
   private addRemoveFromCart(itemKey: string): void {
-    //wait a bit for the check animation, grab the correct item and update inCart
     let items = this.state.items
-    let foundItem = _.remove(items, { id: itemKey })[0]
-    foundItem.inCart = !foundItem.inCart
-    console.log(`found item -> ${foundItem}`)
-    items.push(foundItem)
+    let itemIndex = _.findLastIndex(items, { id: itemKey })
+    items[itemIndex].inCart = !items[itemIndex].inCart
     this.setState({ items })
   }
 
