@@ -2,7 +2,7 @@ import React from "react"
 import { Input, Picker, Button, Text, View } from "native-base"
 
 export interface Props {
-  onAddItem: (name: string, category: string) => void
+  onAddItem: (item: GroceryItem) => void
 }
 
 interface State {
@@ -24,8 +24,12 @@ export default class AddItem extends React.Component<Props, State> {
   }
 
   submitItem() {
-    console.log(`Add ${this.state.text} to ${this.state.selected}`)
-    this.props.onAddItem(this.state.text, this.state.selected)
+    let item: GroceryItem = {
+      name: this.state.text,
+      category: this.state.selected
+    }
+    console.log(`Submit ${item}`)
+    this.props.onAddItem(item)
   }
 
   render() {

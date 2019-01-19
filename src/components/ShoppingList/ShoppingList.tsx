@@ -23,11 +23,6 @@ interface State {
   sections: { title: string; data: string[] }[]
 }
 
-interface ShoppingListItem {
-  category: string
-  name: string
-}
-
 export default class ShoppingListScreen extends React.Component<Props, State> {
   static navigationOptions = {
     header: null
@@ -60,6 +55,10 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
             "Jasmine Rice",
             "Ice Cream"
           ]
+        },
+        {
+          title: "In Your Cart",
+          data: []
         }
       ]
     }
@@ -74,18 +73,18 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
   }
 
   //TODO: Figure out typing here
-  private onAddItem(name: string, category: string): void {
-    console.log(`onAddItem -> ${name}, ${category}`)
+  private onAddItem(item: GroceryItem): void {
+    console.log(`onAddItem -> ${item}`)
+
     let sections = this.state.sections
-    const section = _.find(sections, { title: category })
-    const sectionIndex = _.findIndex(sections, { title: category })
-    console.log(section)
-    console.log(sectionIndex)
-    if (section && sectionIndex !== undefined) {
+    const index = _.findIndex(sections, { title: item.category })
+
+    if (index >= 0) {
+      const section = sections[index]
       //add new item to the section
       section.data.push(name)
       //replace section at index
-      sections.splice(sectionIndex, 1, section)
+      sections.splice(index, 1, section)
       this.setState({
         sections
       })
