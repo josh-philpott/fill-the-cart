@@ -1,22 +1,31 @@
 import React from "react"
 import { Input, Picker, Button, Text, View } from "native-base"
 
-export interface Props {}
+export interface Props {
+  onAddItem: (name: string, category: string) => void
+}
 
 interface State {
   selected: string
+  text: string
 }
 
 export default class AddItem extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      selected: "Produce"
+      selected: "Produce",
+      text: ""
     }
   }
 
   onValueChange(value: string) {
     this.setState({ selected: value })
+  }
+
+  submitItem() {
+    console.log(`Add ${this.state.text} to ${this.state.selected}`)
+    this.props.onAddItem(this.state.text, this.state.selected)
   }
 
   render() {
@@ -29,6 +38,7 @@ export default class AddItem extends React.Component<Props, State> {
             borderRightColor: "#555555"
           }}
           placeholder="Add Item..."
+          onChangeText={text => this.setState({ text })}
         />
 
         <Picker
@@ -50,6 +60,7 @@ export default class AddItem extends React.Component<Props, State> {
             flex: 1,
             borderRadius: 0
           }}
+          onPress={this.submitItem.bind(this)}
         >
           <Text>Add Item</Text>
         </Button>

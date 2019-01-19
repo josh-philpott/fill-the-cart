@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { SectionList } from "react-native"
 import {
   Container,
@@ -10,15 +10,30 @@ import {
   Separator
 } from "native-base"
 import { Font, AppLoading } from "expo"
-import ShoppingListItem from "./ShoppingListItem"
-import AddItem from "./AddItem"
 
-export default class ShoppingListScreen extends Component {
+import AddItem from "./AddItem"
+import ShoppingListItem from "./ShoppingListItem"
+
+import _ from "lodash"
+
+export interface Props {}
+
+interface State {
+  loading: boolean
+  sections: { title: string; data: string[] }[]
+}
+
+interface ShoppingListItem {
+  category: string
+  name: string
+}
+
+export default class ShoppingListScreen extends React.Component<Props, State> {
   static navigationOptions = {
     header: null
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
     this.state = {
       loading: true,
@@ -58,6 +73,25 @@ export default class ShoppingListScreen extends Component {
     this.setState({ loading: false })
   }
 
+  //TODO: Figure out typing here
+  private onAddItem(name: string, category: string): void {
+    console.log(`onAddItem -> ${name}, ${category}`)
+    let sections = this.state.sections
+    const section = _.find(sections, { title: category })
+    const sectionIndex = _.findIndex(sections, { title: category })
+    console.log(section)
+    console.log(sectionIndex)
+    if (section && sectionIndex !== undefined) {
+      //add new item to the section
+      section.data.push(name)
+      //replace section at index
+      sections.splice(sectionIndex, 1, section)
+      this.setState({
+        sections
+      })
+    }
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -66,6 +100,7 @@ export default class ShoppingListScreen extends Component {
         </Container>
       )
     }
+
     return (
       <Container>
         <Header>
@@ -74,7 +109,7 @@ export default class ShoppingListScreen extends Component {
           </Body>
         </Header>
         <Content>
-          <AddItem />
+          <AddItem onAddItem={this.onAddItem.bind(this)} />
 
           <SectionList
             sections={this.state.sections}
