@@ -1,10 +1,11 @@
 import React from "react"
-import { ListItem, CheckBox, Text, Body } from "native-base"
+import { ListItem, CheckBox, Text, Body, Right, Icon } from "native-base"
 
 export interface Props {
   item: GroceryItem
   checked: boolean
   onCheck: (itemKey: string) => void
+  onDelete: (itemKey: string) => void
 }
 
 interface State {
@@ -29,7 +30,7 @@ export default class ShoppingListItem extends React.Component<Props, State> {
 
   render() {
     return (
-      <ListItem onPress={this.handleCheckClick.bind(this)}>
+      <ListItem>
         <CheckBox
           onPress={this.handleCheckClick.bind(this)}
           checked={this.state.checked}
@@ -37,6 +38,15 @@ export default class ShoppingListItem extends React.Component<Props, State> {
         <Body>
           <Text>{this.props.item.name}</Text>
         </Body>
+        <Right>
+          <Icon
+            name="trash"
+            style={{ fontSize: 30, color: "red" }}
+            onPress={() => {
+              this.props.onDelete(this.props.item.id)
+            }}
+          />
+        </Right>
       </ListItem>
     )
   }

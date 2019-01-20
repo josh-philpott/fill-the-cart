@@ -93,9 +93,15 @@ export default class ShoppingList extends React.Component<Props, State> {
     this.setState({ items })
   }
 
+  private deleteItem(itemKey: string): void {
+    let items = this.state.items
+    _.remove(items, { id: itemKey })
+    this.setState({ items })
+  }
+
   render() {
     return (
-      <Content>
+      <Content style={{ borderTopWidth: 2 }}>
         <AddItem onAddItem={this.onAddItem.bind(this)} />
 
         <SectionList
@@ -110,6 +116,7 @@ export default class ShoppingList extends React.Component<Props, State> {
               item={item}
               checked={item.inCart}
               onCheck={this.addRemoveFromCart.bind(this)}
+              onDelete={this.deleteItem.bind(this)}
             />
           )}
           keyExtractor={item => {

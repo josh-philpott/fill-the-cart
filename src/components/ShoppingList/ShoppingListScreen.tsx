@@ -1,5 +1,14 @@
 import React from "react"
-import { Container, Header, Body, Title } from "native-base"
+import {
+  Container,
+  Header,
+  Icon,
+  Body,
+  Title,
+  Right,
+  Left,
+  Button
+} from "native-base"
 import { Font, AppLoading } from "expo"
 
 import ShoppingList from "./ShoppingList"
@@ -43,9 +52,19 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
     return (
       <Container>
         <Header>
+          <Left>
+            <Button transparent>
+              <Icon name="arrow-back" />
+            </Button>
+          </Left>
           <Body>
             <Title>Shopping List</Title>
           </Body>
+          <Right>
+            <Button transparent>
+              <Icon name="more" />
+            </Button>
+          </Right>
         </Header>
         <ShoppingList />
       </Container>
