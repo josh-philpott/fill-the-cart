@@ -7,9 +7,17 @@ import {
   Title,
   Right,
   Left,
+  Text,
   Button
 } from "native-base"
 import { Font, AppLoading } from "expo"
+import {
+  MenuProvider,
+  Menu,
+  MenuTrigger,
+  MenuOptions,
+  MenuOption
+} from "react-native-popup-menu"
 
 import ShoppingList from "./ShoppingList"
 
@@ -50,24 +58,47 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
     }
 
     return (
-      <Container>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Shopping List</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name="more" />
-            </Button>
-          </Right>
-        </Header>
-        <ShoppingList />
-      </Container>
+      <MenuProvider>
+        <Container>
+          <Header>
+            <Left>
+              <Button transparent>
+                <Icon name='arrow-back' />
+              </Button>
+            </Left>
+            <Body>
+              <Title>Shopping List</Title>
+            </Body>
+            <Right>
+              <Menu name='shoppingListMoreMenu'>
+                <MenuTrigger>
+                  <Icon
+                    name='more'
+                    style={{
+                      color: "#FFFFFF",
+                      padding: 10
+                    }}
+                  />
+                </MenuTrigger>
+                <MenuOptions>
+                  <MenuOption onSelect={() => alert(`Delete Items Selected`)}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        padding: 10,
+                        marginTop: 5,
+                        marginBottom: 5
+                      }}>
+                      Delete Items...
+                    </Text>
+                  </MenuOption>
+                </MenuOptions>
+              </Menu>
+            </Right>
+          </Header>
+          <ShoppingList />
+        </Container>
+      </MenuProvider>
     )
   }
 }
