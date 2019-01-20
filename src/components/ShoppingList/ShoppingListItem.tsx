@@ -34,6 +34,7 @@ export default class ShoppingListItem extends React.Component<Props, State> {
         <CheckBox
           onPress={this.handleCheckClick.bind(this)}
           checked={this.state.checked}
+          hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
         />
         <Body>
           <Text>{this.props.item.name}</Text>
