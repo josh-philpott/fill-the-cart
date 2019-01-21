@@ -4,6 +4,7 @@ import { Content, Text, Separator } from "native-base"
 
 import AddItem from "./AddItem"
 import ShoppingListItem from "./ShoppingListItem"
+import { quantityType } from "../../interfaces/ShoppingList/enums"
 
 import _ from "lodash"
 import uuidv1 from "uuid/v1"
@@ -26,19 +27,23 @@ export default class ShoppingList extends React.Component<Props, State> {
         {
           id: uuidv1(),
           category: "Produce",
-          name: "1 Shallot",
+          name: "Shallot",
+          quantity: 1,
           inCart: false
         },
         {
           id: uuidv1(),
           category: "Produce",
-          name: "2 Carrots",
+          name: "Carrots",
+          quantity: 2,
           inCart: false
         },
         {
           id: uuidv1(),
           category: "Meat",
-          name: "Ground Turkey (1 lb)",
+          name: "Ground Turkey",
+          quantity: 1,
+          quantityType: quantityType.lbs,
           inCart: false
         },
         { id: uuidv1(), category: "Pantry", name: "Soy Sauce", inCart: false },
@@ -52,12 +57,16 @@ export default class ShoppingList extends React.Component<Props, State> {
           id: uuidv1(),
           category: "Pantry",
           name: "Brown Sugar",
+          quantity: 2,
+          quantityType: quantityType.cups,
           inCart: false
         },
         {
           id: uuidv1(),
           category: "Pantry",
           name: "Jasmine Rice",
+          quantity: 1,
+          quantityType: quantityType.cups,
           inCart: false
         }
       ]

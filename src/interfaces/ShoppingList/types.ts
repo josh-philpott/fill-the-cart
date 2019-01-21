@@ -1,7 +1,11 @@
+import { quantityType } from "./enums"
+
 interface GroceryItem {
   id: string
-  category: string
   name: string
+  category: string
+  quantity?: number
+  quantityType?: quantityType
   inCart: boolean
 }
 
