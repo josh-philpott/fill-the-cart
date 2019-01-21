@@ -1,6 +1,6 @@
 import { quantityType } from "./enums"
 
-interface GroceryItem {
+export interface GroceryItem {
   id: string
   name: string
   category: string
@@ -14,7 +14,7 @@ interface GroceryItem {
  * defenition files?
  */
 
-interface SectionListData {
+export interface SectionListData {
   data: GroceryItem[]
   title: string
 }

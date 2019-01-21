@@ -5,6 +5,10 @@ import { Content, Text, Separator } from "native-base"
 import AddItem from "./AddItem"
 import ShoppingListItem from "./ShoppingListItem"
 import { quantityType } from "../../interfaces/ShoppingList/enums"
+import {
+  GroceryItem,
+  SectionListData
+} from "../../interfaces/ShoppingList/types"
 
 import _ from "lodash"
 import uuidv1 from "uuid/v1"

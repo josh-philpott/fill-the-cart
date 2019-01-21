@@ -7,12 +7,16 @@ import {
   Body,
   Title,
   Left,
+  Right,
   Button,
   Text,
   Content,
   View,
-  Input
+  Input,
+  Picker
 } from "native-base"
+import { getEnumNames } from "../../../utils/EnumUtils"
+import { PickerItem } from "react-native"
 
 export interface Props {
   navigation: NavigationScreenProp<any, any>
@@ -36,16 +40,19 @@ export default class ItemHighlightScreen extends React.Component<Props, State> {
         <Header>
           <Left>
             <Button
-              transparent
               onPress={() => {
                 this.props.navigation.goBack()
               }}>
-              <Icon name='arrow-back' />
+              <Icon name='close' />
+              <Text style={{ paddingLeft: 0 }}>CANCEL</Text>
             </Button>
           </Left>
-          <Body>
-            <Title>Item Highlight</Title>
-          </Body>
+          <Right>
+            <Button>
+              <Icon name='save' />
+              <Text style={{ paddingLeft: 0 }}>SAVE</Text>
+            </Button>
+          </Right>
         </Header>
         <Content style={{ marginHorizontal: 10 }}>
           <Input
@@ -56,6 +63,32 @@ export default class ItemHighlightScreen extends React.Component<Props, State> {
             onChangeText={text => this.setState({ text })}
             value={this.props.navigation.getParam("item").name}
           />
+          <View
+            style={{
+              flexDirection: "row",
+              marginVertical: 10,
+              width: 300
+            }}>
+            <Text style={{ alignSelf: "center", flex: 1 }}>Quantity</Text>
+            <Input
+              style={{
+                borderBottomWidth: 2,
+                borderColor: "#334393",
+                width: 5,
+                flex: 1,
+                textAlign: "center"
+              }}
+              keyboardType='numeric'
+            />
+
+            <Picker>
+              <Picker.Item label='none' />
+              <Picker.Item label='cups' />
+              <Picker.Item label='pieces' />
+              <Picker.Item label='tbsp' />
+              <Picker.Item label='tsp' />
+            </Picker>
+          </View>
         </Content>
         <View
           style={{

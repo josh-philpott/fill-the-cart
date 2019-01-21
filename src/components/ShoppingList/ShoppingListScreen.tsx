@@ -21,6 +21,7 @@ import {
 } from "react-native-popup-menu"
 
 import ShoppingList from "./ShoppingList"
+import { GroceryItem } from "../../interfaces/ShoppingList/types"
 
 export interface Props {
   navigation: NavigationScreenProp<any, any>
