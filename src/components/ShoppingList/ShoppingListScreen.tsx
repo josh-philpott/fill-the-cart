@@ -1,4 +1,5 @@
 import React from "react"
+import { NavigationScreenProp } from "react-navigation"
 import {
   Container,
   Header,
@@ -21,7 +22,9 @@ import {
 
 import ShoppingList from "./ShoppingList"
 
-export interface Props {}
+export interface Props {
+  navigation: NavigationScreenProp<any, any>
+}
 
 interface State {
   loading: boolean
@@ -46,6 +49,10 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     })
     this.setState({ loading: false })
+  }
+
+  private navigateToItemHighlight(item: GroceryItem): void {
+    this.props.navigation.navigate("ItemHighlight", { item: item })
   }
 
   render() {
@@ -92,11 +99,25 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
                       Delete Items...
                     </Text>
                   </MenuOption>
+                  <MenuOption
+                    onSelect={() =>
+                      this.props.navigation.navigate("ItemHighlight")
+                    }>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        padding: 10,
+                        marginTop: 5,
+                        marginBottom: 5
+                      }}>
+                      Delete Items...
+                    </Text>
+                  </MenuOption>
                 </MenuOptions>
               </Menu>
             </Right>
           </Header>
-          <ShoppingList />
+          <ShoppingList onItemClick={this.navigateToItemHighlight.bind(this)} />
         </Container>
       </MenuProvider>
     )

@@ -8,7 +8,9 @@ import ShoppingListItem from "./ShoppingListItem"
 import _ from "lodash"
 import uuidv1 from "uuid/v1"
 
-export interface Props {}
+export interface Props {
+  onItemClick: (item: GroceryItem) => void
+}
 
 interface State {
   items: GroceryItem[]
@@ -117,6 +119,7 @@ export default class ShoppingList extends React.Component<Props, State> {
               checked={item.inCart}
               onCheck={this.addRemoveFromCart.bind(this)}
               onDelete={this.deleteItem.bind(this)}
+              onPress={this.props.onItemClick}
             />
           )}
           keyExtractor={item => {

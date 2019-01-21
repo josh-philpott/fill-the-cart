@@ -6,6 +6,7 @@ export interface Props {
   checked: boolean
   onCheck: (itemKey: string) => void
   onDelete: (itemKey: string) => void
+  onPress: (item: GroceryItem) => void
 }
 
 interface State {
@@ -30,7 +31,10 @@ export default class ShoppingListItem extends React.Component<Props, State> {
 
   render() {
     return (
-      <ListItem>
+      <ListItem
+        onPress={() => {
+          this.props.onPress(this.props.item)
+        }}>
         <CheckBox
           onPress={this.handleCheckClick.bind(this)}
           checked={this.state.checked}
@@ -41,7 +45,7 @@ export default class ShoppingListItem extends React.Component<Props, State> {
         </Body>
         <Right>
           <Icon
-            name="trash"
+            name='trash'
             style={{ fontSize: 30, color: "red" }}
             onPress={() => {
               this.props.onDelete(this.props.item.id)
