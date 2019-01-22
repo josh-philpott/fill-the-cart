@@ -78,8 +78,9 @@ export default class ItemHighlightScreen extends React.Component<Props, State> {
                 flex: 1,
                 textAlign: "center"
               }}
-              keyboardType='numeric'
-            />
+              keyboardType='numeric'>
+              {this.props.navigation.getParam("item").quantity}
+            </Input>
 
             <Picker>
               <Picker.Item label='none' />
