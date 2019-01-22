@@ -12,9 +12,11 @@ import {
 
 import _ from "lodash"
 import uuidv1 from "uuid/v1"
+import { connect } from "react-redux"
 
 export interface Props {
   onItemClick: (item: GroceryItem) => void
+  categorySortOrder: string[]
 }
 
 interface State {
@@ -22,7 +24,7 @@ interface State {
   categorySortOrder: string[]
 }
 
-export default class ShoppingList extends React.Component<Props, State> {
+class ShoppingList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -31,7 +33,7 @@ export default class ShoppingList extends React.Component<Props, State> {
         {
           id: uuidv1(),
           category: "Produce",
-          name: "Shallot",
+          name: "Shallots",
           quantity: 1,
           inCart: false
         },
@@ -84,7 +86,7 @@ export default class ShoppingList extends React.Component<Props, State> {
   }
 
   private getItemsByCategory(): SectionListData[] {
-    let sortOrder = this.state.categorySortOrder
+    let sortOrder = this.props.categorySortOrder
     let itemsByCategoryDerived = _(this.state.items)
       .groupBy(item => (item.inCart ? "In Cart" : item.category))
       .map((value, key) => {
@@ -143,3 +145,12 @@ export default class ShoppingList extends React.Component<Props, State> {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    categorySortOrder: state.shoppingList.categorySortOrder,
+    items: state.shoppingList.items
+  }
+}
+
+export default connect(mapStateToProps)(ShoppingList)
