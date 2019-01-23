@@ -1,7 +1,8 @@
 import initialState from "./initialState"
 import {
   FETCH_SHOPPING_LIST,
-  RECEIVE_SHOPPING_LIST
+  RECEIVE_SHOPPING_LIST,
+  ADD_ITEM_TO_SHOPPING_LIST
 } from "../actions/actionTypes"
 
 export default function shoppingList(state = initialState, action) {
@@ -14,6 +15,11 @@ export default function shoppingList(state = initialState, action) {
       newState = action.stuff
       console.log("RECEIVE_SHOPPING_LIST Action")
       return newState
+    case ADD_ITEM_TO_SHOPPING_LIST:
+      console.log("ADD_ITEM_TO_SHOPPING_LIST Action")
+      return Object.assign({}, state, {
+        items: [...state.items, action.item]
+      })
     default:
       return state
   }

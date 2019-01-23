@@ -1,4 +1,5 @@
 import * as types from "./actionTypes"
+import { GroceryItem } from "../interfaces/ShoppingList/types"
 
 function url() {
   return "www.url.com"
@@ -22,4 +23,8 @@ export function fetchShoppingList() {
       .then(response => response.json())
       .then(json => dispatch(receiveShoppingList(json)))
   }
+}
+
+export function addShoppingListItem(item: GroceryItem) {
+  return { type: types.ADD_ITEM_TO_SHOPPING_LIST, item: item }
 }

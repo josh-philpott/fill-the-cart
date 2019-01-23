@@ -13,10 +13,12 @@ import {
 import _ from "lodash"
 import uuidv1 from "uuid/v1"
 import { connect } from "react-redux"
+import { addShoppingListItem } from "../../actions/shoppingListActions"
 
 export interface Props {
   onItemClick: (item: GroceryItem) => void
   categorySortOrder: string[]
+  addItem: (item: GroceryItem) => void
 }
 
 interface State {
@@ -119,7 +121,7 @@ class ShoppingList extends React.Component<Props, State> {
   render() {
     return (
       <Content style={{ borderTopWidth: 2 }}>
-        <AddItem onAddItem={this.onAddItem.bind(this)} />
+        <AddItem onAddItem={this.props.addItem} />
 
         <SectionList
           sections={this.getItemsByCategory()}
@@ -153,4 +155,13 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ShoppingList)
+const mapDispatchToProps = dispatch => {
+  return {
+    addItem: item => dispatch(addShoppingListItem(item))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShoppingList)
