@@ -21,13 +21,11 @@ export interface Props {
   itemsByCategory: SectionListData[]
   onItemClick: (item: GroceryItem) => void
   addItem: (item: GroceryItem) => void
-  removeItem: (id: string) => void
+  deleteItem: (id: string) => void
   toggleItemInCart: (id: string) => void
 }
 
-interface State {}
-
-class ShoppingList extends React.Component<Props, State> {
+class ShoppingList extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
   }
@@ -62,10 +60,10 @@ class ShoppingList extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   const getItemsByCategory = function(
-    items,
-    categorySortOrder
+    items: GroceryItem[],
+    categorySortOrder: string[]
   ): SectionListData[] {
     let sortOrder = categorySortOrder
     let itemsByCategoryDerived = _(items)
@@ -89,7 +87,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     addItem: (item: GroceryItem) => dispatch(addShoppingListItem(item)),
     deleteItem: (id: string) => dispatch(removeShoppingListItem(id)),
