@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Dispatch } from "react"
 import { SectionList } from "react-native"
 import { Content, Text, Separator } from "native-base"
 
@@ -11,7 +11,6 @@ import {
 
 import _ from "lodash"
 import { connect } from "react-redux"
-
 import {
   addShoppingListItem,
   removeShoppingListItem,
@@ -19,15 +18,14 @@ import {
 } from "../../actions/shoppingListActions"
 
 export interface Props {
+  itemsByCategory: SectionListData[]
   onItemClick: (item: GroceryItem) => void
   addItem: (item: GroceryItem) => void
-  removeItem: (id: string) => void
+  deleteItem: (id: string) => void
   toggleItemInCart: (id: string) => void
 }
 
-interface State {}
-
-class ShoppingList extends React.Component<Props, State> {
+class ShoppingList extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
   }
@@ -62,10 +60,10 @@ class ShoppingList extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   const getItemsByCategory = function(
-    items,
-    categorySortOrder
+    items: GroceryItem[],
+    categorySortOrder: string[]
   ): SectionListData[] {
     let sortOrder = categorySortOrder
     let itemsByCategoryDerived = _(items)
@@ -89,11 +87,11 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
-    addItem: item => dispatch(addShoppingListItem(item)),
-    deleteItem: id => dispatch(removeShoppingListItem(id)),
-    toggleItemInCart: id => dispatch(toggleItemInCart(id))
+    addItem: (item: GroceryItem) => dispatch(addShoppingListItem(item)),
+    deleteItem: (id: string) => dispatch(removeShoppingListItem(id)),
+    toggleItemInCart: (id: string) => dispatch(toggleItemInCart(id))
   }
 }
 
