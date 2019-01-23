@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Dispatch } from "react"
 import { SectionList } from "react-native"
 import { Content, Text, Separator } from "native-base"
 
@@ -11,7 +11,6 @@ import {
 
 import _ from "lodash"
 import { connect } from "react-redux"
-
 import {
   addShoppingListItem,
   removeShoppingListItem,
@@ -19,6 +18,7 @@ import {
 } from "../../actions/shoppingListActions"
 
 export interface Props {
+  itemsByCategory: SectionListData[]
   onItemClick: (item: GroceryItem) => void
   addItem: (item: GroceryItem) => void
   removeItem: (id: string) => void
@@ -91,9 +91,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addItem: item => dispatch(addShoppingListItem(item)),
-    deleteItem: id => dispatch(removeShoppingListItem(id)),
-    toggleItemInCart: id => dispatch(toggleItemInCart(id))
+    addItem: (item: GroceryItem) => dispatch(addShoppingListItem(item)),
+    deleteItem: (id: string) => dispatch(removeShoppingListItem(id)),
+    toggleItemInCart: (id: string) => dispatch(toggleItemInCart(id))
   }
 }
 
