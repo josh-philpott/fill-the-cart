@@ -1,6 +1,7 @@
 import React from "react"
 import { Input, Picker, Button, Text, View } from "native-base"
 import uuidv1 from "uuid/v1"
+import { GroceryItem } from "../../interfaces/ShoppingList/types"
 
 export interface Props {
   onAddItem: (item: GroceryItem) => void
@@ -43,21 +44,20 @@ export default class AddItem extends React.Component<Props, State> {
             borderRightWidth: 1,
             borderRightColor: "#555555"
           }}
-          placeholder="ex. 3 Bananas"
+          placeholder='ex. 3 Bananas'
           onChangeText={text => this.setState({ text })}
         />
 
         <Picker
-          mode="dropdown"
+          mode='dropdown'
           style={{
             flex: 3
           }}
           selectedValue={this.state.selected}
-          onValueChange={this.onValueChange.bind(this)}
-        >
-          <Picker.Item label="Produce" value="Produce" />
-          <Picker.Item label="Meat" value="Meat" />
-          <Picker.Item label="Pantry" value="Pantry" />
+          onValueChange={this.onValueChange.bind(this)}>
+          <Picker.Item label='Produce' value='Produce' />
+          <Picker.Item label='Meat' value='Meat' />
+          <Picker.Item label='Pantry' value='Pantry' />
         </Picker>
 
         <Button
@@ -65,8 +65,7 @@ export default class AddItem extends React.Component<Props, State> {
             flex: 1,
             borderRadius: 0
           }}
-          onPress={this.submitItem.bind(this)}
-        >
+          onPress={this.submitItem.bind(this)}>
           <Text>Add Item</Text>
         </Button>
       </View>
