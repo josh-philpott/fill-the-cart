@@ -23,7 +23,9 @@ export default function shoppingList(state = initialState, action) {
       })
     case TOGGLE_ITEM_IN_CART: {
       let items = state.items
-      let itemIndex = _.findLastIndex(items, { id: action.id })
+      let itemIndex = _.findLastIndex(items, {
+        id: action.id
+      })
       items[itemIndex].inCart = !items[itemIndex].inCart
       return Object.assign({}, state, {
         items
