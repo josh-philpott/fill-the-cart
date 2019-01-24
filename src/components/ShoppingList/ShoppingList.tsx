@@ -17,12 +17,8 @@ import {
   toggleItemInCart
 } from "../../actions/shoppingListActions"
 
-export interface Props {
-  itemsByCategory: SectionListData[]
+export interface Props extends StateFromProps, DispatchFromProps {
   onItemClick: (item: GroceryItem) => void
-  addItem: (item: GroceryItem) => void
-  deleteItem: (id: string) => void
-  toggleItemInCart: (id: string) => void
 }
 
 class ShoppingList extends React.Component<Props> {
@@ -30,7 +26,7 @@ class ShoppingList extends React.Component<Props> {
     super(props)
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Content style={{ borderTopWidth: 2 }}>
         <AddItem onAddItem={this.props.addItem} />
@@ -42,7 +38,7 @@ class ShoppingList extends React.Component<Props> {
               <Text style={{ fontSize: 16 }}>{title}</Text>
             </Separator>
           )}
-          renderItem={({ item, index }) => (
+          renderItem={({ item }) => (
             <ShoppingListItem
               item={item}
               checked={item.inCart}
@@ -60,25 +56,29 @@ class ShoppingList extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any) => {
-  const getItemsByCategory = function(
-    items: GroceryItem[],
-    categorySortOrder: string[]
-  ): SectionListData[] {
-    let sortOrder = categorySortOrder
-    let itemsByCategoryDerived = _(items)
-      .groupBy(item => (item.inCart ? "In Cart" : item.category))
-      .map((value, key) => {
-        return { title: key, data: value }
-      })
-      .sortBy(section => {
-        return sortOrder.indexOf(section.title)
-      })
-      .value()
+interface StateFromProps {
+  itemsByCategory: SectionListData[]
+}
 
-    return itemsByCategoryDerived
-  }
+const getItemsByCategory = function(
+  items: GroceryItem[],
+  categorySortOrder: string[]
+): SectionListData[] {
+  let sortOrder = categorySortOrder
+  let itemsByCategoryDerived = _(items)
+    .groupBy(item => (item.inCart ? "In Cart" : item.category))
+    .map((value, key) => {
+      return { title: key, data: value }
+    })
+    .sortBy(section => {
+      return sortOrder.indexOf(section.title)
+    })
+    .value()
 
+  return itemsByCategoryDerived
+}
+
+const mapStateToProps = (state: any): StateFromProps => {
   return {
     itemsByCategory: getItemsByCategory(
       state.shoppingList.items,
@@ -87,7 +87,13 @@ const mapStateToProps = (state: any) => {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+interface DispatchFromProps {
+  addItem: (item: GroceryItem) => void
+  deleteItem: (id: string) => void
+  toggleItemInCart: (id: string) => void
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchFromProps => {
   return {
     addItem: (item: GroceryItem) => dispatch(addShoppingListItem(item)),
     deleteItem: (id: string) => dispatch(removeShoppingListItem(id)),

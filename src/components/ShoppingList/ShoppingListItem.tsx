@@ -1,6 +1,7 @@
 import React from "react"
 import { ListItem, CheckBox, Text, Body, Right, Icon } from "native-base"
 import { quantityType } from "../../interfaces/ShoppingList/enums"
+import { GroceryItem } from "../../interfaces/ShoppingList/types"
 
 export interface Props {
   item: GroceryItem
@@ -22,6 +23,10 @@ export default class ShoppingListItem extends React.Component<Props, State> {
     }
   }
 
+  /**
+   * This is probably an anti-pattern in redux. I'll
+   * come back to this when I have a little more experience
+   */
   handleCheckClick() {
     this.setState({ checked: !this.state.checked })
     //give a little bit for the check animation to start
@@ -30,15 +35,21 @@ export default class ShoppingListItem extends React.Component<Props, State> {
     }, 10)
   }
 
-  render() {
-    let quantityString = ""
+  buildQuantityString(): string {
+    let quantity: string = ""
     if (this.props.item.quantity) {
-      quantityString += " - " + this.props.item.quantity
+      quantity += " - " + this.props.item.quantity
     }
 
     if (this.props.item.quantityType) {
-      quantityString += " " + quantityType[this.props.item.quantityType]
+      quantity += " " + quantityType[this.props.item.quantityType]
     }
+
+    return quantity
+  }
+
+  render() {
+    let quantityString: string = this.buildQuantityString()
 
     return (
       <ListItem
