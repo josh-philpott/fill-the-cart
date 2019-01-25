@@ -12,3 +12,25 @@ export function removeShoppingListItem(id: string) {
 export function toggleItemInCart(id: string) {
   return { type: types.TOGGLE_ITEM_IN_CART, id }
 }
+
+export const requestShoppingList = (id: string) => ({
+  type: types.REQUEST_SHOPPING_LIST,
+  id
+})
+
+export function receiveShoppingList(list: GroceryItem[]) {
+  return { type: types.RECEIVE_SHOPPING_LIST, list }
+}
+
+export const fetchShoppingList = (id: string) => (dispatch: Dispatch<any>) => {
+  dispatch(requestShoppingList(id))
+  return fetch(`http://10.0.1.57:3000/shopping-list/${id}`)
+    .then(response => response.json())
+    .then(json => dispatch(receiveShoppingList(json)))
+    .catch(error => console.log(error))
+}
+
+//TODO: Not handling errors yet
+export function errorFetchingShoppingList(error: string) {
+  return { type: types.ERROR_FETCH_SHOPPING_LIST, error }
+}

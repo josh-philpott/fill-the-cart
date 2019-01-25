@@ -4,7 +4,11 @@ import initialState from "./initialState"
 import {
   ADD_ITEM_TO_SHOPPING_LIST,
   REMOVE_ITEM_FROM_SHOPPING_LIST,
-  TOGGLE_ITEM_IN_CART
+  TOGGLE_ITEM_IN_CART,
+  FETCH_SHOPPING_LIST,
+  RECEIVE_SHOPPING_LIST,
+  ERROR_FETCH_SHOPPING_LIST,
+  REQUEST_SHOPPING_LIST
 } from "../actions/actionTypes"
 
 export default function shoppingList(state = initialState, action) {
@@ -30,6 +34,21 @@ export default function shoppingList(state = initialState, action) {
       return Object.assign({}, state, {
         items
       })
+    }
+    case REQUEST_SHOPPING_LIST: {
+      return {
+        ...state,
+        isFetching: true
+      }
+    }
+    case RECEIVE_SHOPPING_LIST: {
+      return {
+        ...state,
+        items: action.list,
+        isFetching: false
+      }
+    }
+    case ERROR_FETCH_SHOPPING_LIST: {
     }
     default:
       return state

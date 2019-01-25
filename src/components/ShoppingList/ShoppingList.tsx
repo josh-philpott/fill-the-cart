@@ -14,7 +14,8 @@ import { connect } from "react-redux"
 import {
   addShoppingListItem,
   removeShoppingListItem,
-  toggleItemInCart
+  toggleItemInCart,
+  fetchShoppingList
 } from "../../actions/shoppingListActions"
 
 export interface Props extends StateFromProps, DispatchFromProps {
@@ -24,6 +25,10 @@ export interface Props extends StateFromProps, DispatchFromProps {
 class ShoppingList extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
+  }
+
+  componentDidMount() {
+    this.props.fetchShoppingList("any-ole-id")
   }
 
   render(): JSX.Element {
@@ -91,13 +96,15 @@ interface DispatchFromProps {
   addItem: (item: GroceryItem) => void
   deleteItem: (id: string) => void
   toggleItemInCart: (id: string) => void
+  fetchShoppingList: (id: string) => void
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchFromProps => {
   return {
     addItem: (item: GroceryItem) => dispatch(addShoppingListItem(item)),
     deleteItem: (id: string) => dispatch(removeShoppingListItem(id)),
-    toggleItemInCart: (id: string) => dispatch(toggleItemInCart(id))
+    toggleItemInCart: (id: string) => dispatch(toggleItemInCart(id)),
+    fetchShoppingList: (id: string) => dispatch(fetchShoppingList(id))
   }
 }
 

@@ -1,7 +1,7 @@
 import React from "react"
 import { AppRegistry } from "react-native"
 import { Provider } from "react-redux"
-import { createStore } from "redux"
+import configureStores from "./src/stores/configureStores"
 
 import { createStackNavigator, createAppContainer } from "react-navigation"
 import ShoppingListScreen from "./src/components/ShoppingList/ShoppingListScreen"
@@ -21,7 +21,7 @@ const AppNavigator = createStackNavigator(
 const AppContainer = createAppContainer(AppNavigator)
 
 class App extends React.Component {
-  store = createStore(rootReducer)
+  store = configureStores(rootReducer)
 
   render() {
     return (
