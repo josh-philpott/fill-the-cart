@@ -1,5 +1,6 @@
 import * as types from "./actionTypes"
 import { GroceryItem } from "../interfaces/ShoppingList/types"
+import { apiUrl } from "../../constants"
 
 export function addShoppingListItem(item: GroceryItem) {
   return { type: types.ADD_ITEM_TO_SHOPPING_LIST, item: item }
@@ -24,7 +25,7 @@ export function receiveShoppingList(list: GroceryItem[]) {
 
 export const fetchShoppingList = (id: string) => (dispatch: Dispatch<any>) => {
   dispatch(requestShoppingList(id))
-  return fetch(`http://10.0.1.57:3000/shopping-list/${id}`)
+  return fetch(`${apiUrl}/shopping-list/${id}`)
     .then(response => response.json())
     .then(json => dispatch(receiveShoppingList(json)))
     .catch(error => console.log(error))
