@@ -70,7 +70,11 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
         <Container>
           <Header>
             <Left>
-              <Button transparent>
+              <Button
+                transparent
+                onPress={() => {
+                  this.props.navigation.goBack()
+                }}>
                 <Icon name='arrow-back' />
               </Button>
             </Left>

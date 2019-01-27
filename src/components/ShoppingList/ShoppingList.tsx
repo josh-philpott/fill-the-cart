@@ -28,7 +28,7 @@ class ShoppingList extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.props.fetchShoppingList("marys-list")
+    this.props.fetchShoppingList("shopping-list-one")
   }
 
   render(): JSX.Element {

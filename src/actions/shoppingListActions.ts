@@ -25,7 +25,7 @@ export function receiveShoppingList(list: GroceryItem[]) {
 
 export const fetchShoppingList = (id: string) => (dispatch: Dispatch<any>) => {
   dispatch(requestShoppingList(id))
-  return fetch(`${apiUrl}/shopping-list/${id}`)
+  return fetch(`${apiUrl}/lists/${id}`)
     .then(response => response.json())
     .then(json => dispatch(receiveShoppingList(json)))
     .catch(error => console.log(error))

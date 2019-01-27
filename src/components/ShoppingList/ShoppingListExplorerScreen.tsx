@@ -4,10 +4,15 @@ import {
   Container,
   Header,
   Body,
+  Right,
+  Left,
+  Button,
+  Icon,
   Title,
   Text,
   List,
-  ListItem
+  ListItem,
+  View
 } from "native-base"
 import { Font, AppLoading } from "expo"
 
@@ -55,9 +60,15 @@ export default class ShoppingListExplorerScreen extends React.Component<
     return (
       <Container>
         <Header>
+          <Left />
           <Body>
             <Title>Lists</Title>
           </Body>
+          <Right>
+            <Button transparent>
+              <Icon name='settings' />
+            </Button>
+          </Right>
         </Header>
         <List>
           <ListItem
@@ -73,6 +84,17 @@ export default class ShoppingListExplorerScreen extends React.Component<
             <Text>Resort Ski Check Lists</Text>
           </ListItem>
         </List>
+        <View style={{ flex: 1, justifyContent: "flex-end" }}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row"
+            }}>
+            <Button style={{ alignContent: "center", flex: 1 }}>
+              <Text>Add New List...</Text>
+            </Button>
+          </View>
+        </View>
       </Container>
     )
   }
