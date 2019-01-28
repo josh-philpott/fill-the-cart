@@ -69,13 +69,7 @@ export default class ShoppingListItem extends React.Component<Props, State> {
           </Text>
         </Body>
         <Right>
-          <Icon
-            name='trash'
-            style={{ fontSize: 30, color: "red" }}
-            onPress={() => {
-              this.props.onDelete(this.props.item.id)
-            }}
-          />
+          <Icon name='arrow-dropright' style={{ fontSize: 30 }} />
         </Right>
       </ListItem>
     )

@@ -15,16 +15,14 @@ import {
   Input,
   Picker
 } from "native-base"
-import { getEnumNames } from "../../../utils/EnumUtils"
-import { PickerItem } from "react-native"
+import { connect } from "react-redux"
+import { removeShoppingListItem } from "../../../actions/shoppingListActions"
 
-export interface Props {
+export interface Props extends DispatchFromProps {
   navigation: NavigationScreenProp<any, any>
 }
 
-interface State {}
-
-export default class ItemHighlightScreen extends React.Component<Props, State> {
+class ItemHighlightScreen extends React.Component<Props, State> {
   static navigationOptions = {
     header: null
   }
@@ -35,6 +33,7 @@ export default class ItemHighlightScreen extends React.Component<Props, State> {
   }
 
   render() {
+    const item = this.props.navigation.getParam("item")
     return (
       <Container>
         <Header>
@@ -61,7 +60,7 @@ export default class ItemHighlightScreen extends React.Component<Props, State> {
               borderColor: "#334393"
             }}
             onChangeText={text => this.setState({ text })}
-            value={this.props.navigation.getParam("item").name}
+            value={item.name}
           />
           <View
             style={{
@@ -79,7 +78,7 @@ export default class ItemHighlightScreen extends React.Component<Props, State> {
                 textAlign: "center"
               }}
               keyboardType='numeric'>
-              {this.props.navigation.getParam("item").quantity}
+              {item.quantity}
             </Input>
 
             <Picker>
@@ -102,7 +101,12 @@ export default class ItemHighlightScreen extends React.Component<Props, State> {
             fontSize: 20,
             color: "red"
           }}>
-          <Button transparent>
+          <Button
+            transparent
+            onPress={() => {
+              this.props.deleteItem(item.id)
+              this.props.navigation.goBack()
+            }}>
             <Icon name='trash' />
             <Text style={{ paddingLeft: 0 }}>Delete</Text>
           </Button>
@@ -111,3 +115,26 @@ export default class ItemHighlightScreen extends React.Component<Props, State> {
     )
   }
 }
+
+interface StateFromProps {}
+
+const mapStateToProps = (state: any): StateFromProps => {
+  return {}
+}
+
+interface DispatchFromProps {
+  deleteItem: (id: string) => void
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchFromProps => {
+  return {
+    deleteItem: (id: string) => {
+      dispatch(removeShoppingListItem(id))
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ItemHighlightScreen)
