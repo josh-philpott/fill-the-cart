@@ -5,18 +5,16 @@ import configureStores from "./src/stores/configureStores"
 
 import { createStackNavigator, createAppContainer } from "react-navigation"
 import ShoppingListScreen from "./src/components/ShoppingList/ShoppingListScreen"
-import ShoppingListExplorerScreen from "./src/components/ShoppingList/ShoppingListExplorerScreen"
 import ItemHighlightScreen from "./src/components/ShoppingList/ItemHighlight/ItemHighlightScreen"
 import rootReducer from "./src/reducers/rootReducer"
 
 const AppNavigator = createStackNavigator(
   {
-    ShoppingListExplorer: ShoppingListExplorerScreen,
     ShoppingList: ShoppingListScreen,
     ItemHighlight: ItemHighlightScreen
   },
   {
-    initialRouteName: "ShoppingListExplorer"
+    initialRouteName: "ShoppingList"
   }
 )
 

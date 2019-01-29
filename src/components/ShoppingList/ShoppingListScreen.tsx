@@ -69,17 +69,8 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
       <MenuProvider>
         <Container>
           <Header>
-            <Left>
-              <Button
-                transparent
-                onPress={() => {
-                  this.props.navigation.goBack()
-                }}>
-                <Icon name='arrow-back' />
-              </Button>
-            </Left>
             <Body>
-              <Title>Shopping List</Title>
+              <Title style={{ marginLeft: 0 }}>My Shopping List</Title>
             </Body>
             <Right>
               <Menu name='shoppingListMoreMenu'>
