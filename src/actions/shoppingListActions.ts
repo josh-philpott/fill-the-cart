@@ -31,6 +31,9 @@ export const fetchShoppingList = (id: string) => (dispatch: Dispatch<any>) => {
     .catch(error => console.log(error))
 }
 
+export function updateItem(id: string, name: string, quantity: number) {
+  return { type: types.UPDATE_ITEM, id, name, quantity }
+}
 //TODO: Not handling errors yet
 export function errorFetchingShoppingList(error: string) {
   return { type: types.ERROR_FETCH_SHOPPING_LIST, error }

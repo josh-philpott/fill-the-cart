@@ -16,10 +16,14 @@ import {
   Picker
 } from "native-base"
 import { connect } from "react-redux"
-import { removeShoppingListItem } from "../../../actions/shoppingListActions"
+import {
+  removeShoppingListItem,
+  updateItem
+} from "../../../actions/shoppingListActions"
 
 export interface Props extends DispatchFromProps {
   navigation: NavigationScreenProp<any, any>
+  onSave: (id: string, name: string, quantity: string) => void
 }
 
 class ItemHighlightScreen extends React.Component<Props, State> {
@@ -29,7 +33,11 @@ class ItemHighlightScreen extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    this.state = {}
+    const item = this.props.navigation.getParam("item")
+    this.state = {
+      newName: item.name,
+      newQuantity: item.quantity
+    }
   }
 
   render() {
@@ -47,7 +55,15 @@ class ItemHighlightScreen extends React.Component<Props, State> {
             </Button>
           </Left>
           <Right>
-            <Button>
+            <Button
+              onPress={() => {
+                this.props.updateItem(
+                  item.id,
+                  this.state.newName,
+                  this.state.newQuantity
+                )
+                this.props.navigation.goBack()
+              }}>
               <Icon name='save' />
               <Text style={{ paddingLeft: 0 }}>SAVE</Text>
             </Button>
@@ -59,8 +75,8 @@ class ItemHighlightScreen extends React.Component<Props, State> {
               borderBottomWidth: 2,
               borderColor: "#334393"
             }}
-            onChangeText={text => this.setState({ text })}
-            value={item.name}
+            onChangeText={newName => this.setState({ newName })}
+            value={this.state.newName}
           />
           <View
             style={{
@@ -77,9 +93,10 @@ class ItemHighlightScreen extends React.Component<Props, State> {
                 flex: 1,
                 textAlign: "center"
               }}
-              keyboardType='numeric'>
-              {item.quantity}
-            </Input>
+              keyboardType='numeric'
+              onChangeText={newQuantity => this.setState({ newQuantity })}
+              value={this.state.newQuantity}
+            />
 
             <Picker>
               <Picker.Item label='none' />
@@ -124,12 +141,16 @@ const mapStateToProps = (state: any): StateFromProps => {
 
 interface DispatchFromProps {
   deleteItem: (id: string) => void
+  updateItem: (id: string, name: string, quantity: number) => void
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchFromProps => {
   return {
     deleteItem: (id: string) => {
       dispatch(removeShoppingListItem(id))
+    },
+    updateItem: (id: string, name: string, quantity: number) => {
+      dispatch(updateItem(id, name, quantity))
     }
   }
 }

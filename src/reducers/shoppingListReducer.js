@@ -7,6 +7,7 @@ import {
   TOGGLE_ITEM_IN_CART,
   FETCH_SHOPPING_LIST,
   RECEIVE_SHOPPING_LIST,
+  UPDATE_ITEM,
   ERROR_FETCH_SHOPPING_LIST,
   REQUEST_SHOPPING_LIST
 } from "../actions/actionTypes"
@@ -47,6 +48,17 @@ export default function shoppingList(state = initialState, action) {
         items: action.list,
         isFetching: false
       }
+    }
+    case UPDATE_ITEM: {
+      let items = state.items
+      let itemIndex = _.findLastIndex(items, {
+        id: action.id
+      })
+      items[itemIndex].name = action.name
+      items[itemIndex].quantity = action.quantity
+      return Object.assign({}, state, {
+        items
+      })
     }
     case ERROR_FETCH_SHOPPING_LIST: {
     }
