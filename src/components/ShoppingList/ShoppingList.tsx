@@ -1,6 +1,6 @@
 import React, { Dispatch } from "react"
-import { SectionList } from "react-native"
-import { Content, Text, Separator } from "native-base"
+import { SectionList, ScrollView } from "react-native"
+import { Content, Text, Separator, View } from "native-base"
 
 import AddItem from "./AddItem"
 import ShoppingListItem from "./ShoppingListItem"
@@ -33,29 +33,31 @@ class ShoppingList extends React.Component<Props> {
 
   render(): JSX.Element {
     return (
-      <Content style={{ borderTopWidth: 2 }}>
-        <AddItem onAddItem={this.props.addItem} />
-
-        <SectionList
-          sections={this.props.itemsByCategory}
-          renderSectionHeader={({ section: { title } }) => (
-            <Separator bordered>
-              <Text style={{ fontSize: 16 }}>{title}</Text>
-            </Separator>
-          )}
-          renderItem={({ item }) => (
-            <ShoppingListItem
-              item={item}
-              checked={item.inCart}
-              onCheck={this.props.toggleItemInCart}
-              onDelete={this.props.deleteItem}
-              onPress={this.props.onItemClick}
-            />
-          )}
-          keyExtractor={item => {
-            return item.id
-          }}
-        />
+      <Content contentContainerStyle={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+          <SectionList
+            style={{ flex: 1 }}
+            sections={this.props.itemsByCategory}
+            renderSectionHeader={({ section: { title } }) => (
+              <Separator bordered>
+                <Text style={{ fontSize: 16 }}>{title}</Text>
+              </Separator>
+            )}
+            renderItem={({ item }) => (
+              <ShoppingListItem
+                item={item}
+                checked={item.inCart}
+                onCheck={this.props.toggleItemInCart}
+                onDelete={this.props.deleteItem}
+                onPress={this.props.onItemClick}
+              />
+            )}
+            keyExtractor={item => {
+              return item.id
+            }}
+          />
+        </View>
+        <AddItem style={{ height: 90 }} onAddItem={this.props.addItem} />
       </Content>
     )
   }
