@@ -32,8 +32,9 @@ class ShoppingList extends React.Component<Props> {
   }
 
   render(): JSX.Element {
-    return (
-      <Content contentContainerStyle={{ flex: 1 }}>
+    let mainContent
+    if (this.props.itemsByCategory.length > 0) {
+      mainContent = (
         <View style={{ flex: 1 }}>
           <SectionList
             style={{ flex: 1 }}
@@ -57,7 +58,30 @@ class ShoppingList extends React.Component<Props> {
             }}
           />
         </View>
-        <AddItem style={{ height: 90 }} onAddItem={this.props.addItem} />
+      )
+    } else {
+      mainContent = (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Text>There are no items in your list...</Text>
+        </View>
+      )
+    }
+
+    return (
+      <Content contentContainerStyle={{ flex: 1 }}>
+        <View style={{ backgroundColor: "#3F51B5" }}>
+          <AddItem
+            style={{
+              height: 50,
+              margin: 10,
+              backgroundColor: "white",
+              borderColor: "white"
+            }}
+            onAddItem={this.props.addItem}
+          />
+        </View>
+        {mainContent}
       </Content>
     )
   }

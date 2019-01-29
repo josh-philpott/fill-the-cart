@@ -12,14 +12,27 @@ export interface Props {
 interface State {
   selected: string
   text: string
+  categories: string[]
 }
 
 export default class AddItem extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      selected: "Produce",
-      text: ""
+      selected: "Uncategorized",
+      text: "",
+      categories: [
+        "Uncategorized",
+        "Baking",
+        "Cereal",
+        "Condiments & Oils",
+        "Dairy",
+        "Frozen",
+        "Herbs & Spices",
+        "Household",
+        "Meat",
+        "Produce"
+      ]
     }
   }
 
@@ -45,45 +58,40 @@ export default class AddItem extends React.Component<Props, State> {
           style={{
             flex: 1,
             flexDirection: "row",
-            borderTopWidth: 1,
-            borderTopColor: "#555555"
+            borderColor: "#555555",
+            borderWidth: 1
           }}>
+          <Picker
+            mode='dropdown'
+            style={{
+              flex: 1
+            }}
+            selectedValue={this.state.selected}
+            onValueChange={this.onValueChange.bind(this)}>
+            {this.state.categories.map(category => (
+              <Picker.Item key={category} label={category} value={category} />
+            ))}
+          </Picker>
           <Input
             style={{
+              height: 48,
               flex: 1,
-              borderRightWidth: 1,
-              borderRightColor: "#555555"
+              borderLeftWidth: 1,
+              borderLeftColor: "#555555"
             }}
             placeholder='Add item'
             placeholderTextColor='#888888'
             autoFocus
             returnKeyType='go'
             onChangeText={text => this.setState({ text })}
+            onSubmitEditing={this.submitItem.bind(this)}
             value={this.state.text}
           />
-
-          <Picker
-            mode='dropdown'
-            style={{
-              flex: 3
-            }}
-            selectedValue={this.state.selected}
-            onValueChange={this.onValueChange.bind(this)}>
-            <Picker.Item label='Produce' value='Produce' />
-            <Picker.Item label='Meat' value='Meat' />
-            <Picker.Item label='Pantry' value='Pantry' />
-          </Picker>
-        </View>
-        <View style={{ flex: 1, flexDirection: "row" }}>
           <Button
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              borderRadius: 0
-            }}
+            transparent
+            style={{ height: 50 }}
             onPress={this.submitItem.bind(this)}>
-            <Icon name='add' style={{ marginRight: 0 }} />
-            <Text>Add Item</Text>
+            <Icon name='checkmark' />
           </Button>
         </View>
       </View>
