@@ -1,6 +1,6 @@
-import * as types from "./actionTypes"
-import { GroceryItem } from "../interfaces/ShoppingList/types"
-import { apiUrl } from "../../constants"
+import * as types from './actionTypes'
+import { GroceryItem } from '../interfaces/ShoppingList/types'
+import { apiUrl } from '../../constants'
 
 export function addShoppingListItem(item: GroceryItem) {
   return { type: types.ADD_ITEM_TO_SHOPPING_LIST, item: item }
@@ -31,8 +31,13 @@ export const fetchShoppingList = (id: string) => (dispatch: Dispatch<any>) => {
     .catch(error => console.log(error))
 }
 
-export function updateItem(id: string, name: string, quantity: number) {
-  return { type: types.UPDATE_ITEM, id, name, quantity }
+export function updateItem(
+  id: string,
+  name: string,
+  quantity: number,
+  quantityType: string
+) {
+  return { type: types.UPDATE_ITEM, id, name, quantity, quantityType }
 }
 //TODO: Not handling errors yet
 export function errorFetchingShoppingList(error: string) {

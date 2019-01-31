@@ -1,7 +1,6 @@
-import React from "react"
-import { ListItem, CheckBox, Text, Body, Right, Icon } from "native-base"
-import { quantityType } from "../../interfaces/ShoppingList/enums"
-import { GroceryItem } from "../../interfaces/ShoppingList/types"
+import React from 'react'
+import { ListItem, CheckBox, Text, Body, Right, Icon } from 'native-base'
+import { GroceryItem } from '../../interfaces/ShoppingList/types'
 
 export interface Props {
   item: GroceryItem
@@ -16,13 +15,13 @@ export default class ShoppingListItem extends React.Component<Props> {
   }
 
   buildQuantityString(): string {
-    let quantity: string = ""
+    let quantity: string = ''
     if (this.props.item.quantity) {
-      quantity += " - " + this.props.item.quantity
+      quantity += ' - ' + this.props.item.quantity
     }
 
     if (this.props.item.quantityType) {
-      quantity += " " + quantityType[this.props.item.quantityType]
+      quantity += ' ' + this.props.item.quantityType
     }
 
     return quantity
@@ -41,10 +40,10 @@ export default class ShoppingListItem extends React.Component<Props> {
           checked={this.props.checked}
           hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
         />
-        <Body style={{ flexDirection: "row" }}>
+        <Body style={{ flexDirection: 'row' }}>
           <Text style={{ marginRight: 0 }}>{this.props.item.name}</Text>
           <Text
-            style={{ fontStyle: "italic", color: "dimgray", marginLeft: 0 }}>
+            style={{ fontStyle: 'italic', color: 'dimgray', marginLeft: 0 }}>
             {quantityString}
           </Text>
         </Body>

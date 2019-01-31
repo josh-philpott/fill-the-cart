@@ -1,17 +1,6 @@
 import React from 'react'
 import { NavigationScreenProp } from 'react-navigation'
-import {
-  Container,
-  Header,
-  Icon,
-  Body,
-  Title,
-  Right,
-  Left,
-  Text,
-  Button
-} from 'native-base'
-import { Font, AppLoading } from 'expo'
+import { Container, Header, Icon, Body, Title, Right, Text } from 'native-base'
 import {
   MenuProvider,
   Menu,
@@ -20,7 +9,6 @@ import {
   MenuOption
 } from 'react-native-popup-menu'
 import { connect } from 'react-redux'
-
 import ShoppingList from './ShoppingList'
 import { GroceryItem } from '../../interfaces/ShoppingList/types'
 import {
@@ -34,11 +22,7 @@ export interface Props extends DispatchFromProps {
   navigation: NavigationScreenProp<any, any>
 }
 
-interface State {
-  loading: boolean
-}
-
-class ShoppingListScreen extends React.Component<Props, State> {
+class ShoppingListScreen extends React.Component<Props> {
   static navigationOptions = {
     header: null
   }
@@ -50,28 +34,11 @@ class ShoppingListScreen extends React.Component<Props, State> {
     }
   }
 
-  async componentWillMount() {
-    // This needs to be at the highest level of the app
-    await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
-    })
-    this.setState({ loading: false })
-  }
-
   private navigateToItemHighlight(item: GroceryItem): void {
     this.props.navigation.navigate('ItemHighlight', { item: item })
   }
 
   render() {
-    if (this.state.loading) {
-      return (
-        <Container>
-          <AppLoading />
-        </Container>
-      )
-    }
-
     return (
       <MenuProvider>
         <Container>

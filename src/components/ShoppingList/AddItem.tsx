@@ -1,8 +1,8 @@
-import React from "react"
-import { Input, Picker, Button, Text, View, Icon } from "native-base"
-import uuidv1 from "uuid/v1"
-import { GroceryItem } from "../../interfaces/ShoppingList/types"
-import { StyleProp, ViewStyle } from "react-native"
+import React from 'react'
+import { Input, Picker, Button, Text, View, Icon } from 'native-base'
+import uuidv1 from 'uuid/v1'
+import { GroceryItem } from '../../interfaces/ShoppingList/types'
+import { StyleProp, ViewStyle } from 'react-native'
 
 export interface Props {
   onAddItem: (item: GroceryItem) => void
@@ -19,19 +19,19 @@ export default class AddItem extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      selected: "Uncategorized",
-      text: "",
+      selected: 'Uncategorized',
+      text: '',
       categories: [
-        "Uncategorized",
-        "Baking",
-        "Cereal",
-        "Condiments & Oils",
-        "Dairy",
-        "Frozen",
-        "Herbs & Spices",
-        "Household",
-        "Meat",
-        "Produce"
+        'Uncategorized',
+        'Baking',
+        'Cereal',
+        'Condiments & Oils',
+        'Dairy',
+        'Frozen',
+        'Herbs & Spices',
+        'Household',
+        'Meat',
+        'Produce'
       ]
     }
   }
@@ -47,18 +47,18 @@ export default class AddItem extends React.Component<Props, State> {
       category: this.state.selected,
       inCart: false
     }
-    this.setState({ text: "" })
+    this.setState({ text: '' })
     this.props.onAddItem(item)
   }
 
   render() {
     return (
-      <View style={{ ...this.props.style }}>
+      <View style={this.props.style}>
         <View
           style={{
             flex: 1,
-            flexDirection: "row",
-            borderColor: "#555555",
+            flexDirection: 'row',
+            borderColor: '#555555',
             borderWidth: 1
           }}>
           <Picker
@@ -77,7 +77,7 @@ export default class AddItem extends React.Component<Props, State> {
               height: 48,
               flex: 1,
               borderLeftWidth: 1,
-              borderLeftColor: "#555555"
+              borderLeftColor: '#555555'
             }}
             placeholder='Add item'
             placeholderTextColor='#888888'

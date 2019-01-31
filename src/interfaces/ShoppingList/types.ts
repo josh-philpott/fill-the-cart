@@ -1,11 +1,9 @@
-import { quantityType } from "./enums"
-
 export interface GroceryItem {
   id: string
   name: string
   category: string
   quantity?: number
-  quantityType?: quantityType
+  quantityType?: string
   inCart: boolean
 }
 

@@ -1,11 +1,12 @@
 import React from 'react'
 import { AppRegistry } from 'react-native'
 import { Provider } from 'react-redux'
-import { store } from './src/stores/configureStores'
-import { persistor } from './src/stores/configureStores'
 import { PersistGate } from 'redux-persist/integration/react'
-
+import { Font, AppLoading } from 'expo'
 import { createStackNavigator, createAppContainer } from 'react-navigation'
+import { Spinner } from 'native-base'
+
+import { store, persistor } from './src/stores/configureStores'
 import ShoppingListScreen from './src/components/ShoppingList/ShoppingListScreen'
 import ItemHighlightScreen from './src/components/ShoppingList/ItemHighlight/ItemHighlightScreen'
 
@@ -22,11 +23,26 @@ const AppNavigator = createStackNavigator(
 const AppContainer = createAppContainer(AppNavigator)
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      fontLoading: true
+    }
+  }
+
+  async componentWillMount() {
+    await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
+    })
+    this.setState({ fontLoading: false })
+  }
+
   render() {
     return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <AppContainer />
+        <PersistGate loading={<Spinner color='green' />} persistor={persistor}>
+          {this.state.fontLoading ? <AppLoading /> : <AppContainer />}
         </PersistGate>
       </Provider>
     )

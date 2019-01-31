@@ -1,5 +1,5 @@
-import React from "react"
-import { NavigationScreenProp } from "react-navigation"
+import React from 'react'
+import { NavigationScreenProp } from 'react-navigation'
 import {
   Container,
   Header,
@@ -14,12 +14,12 @@ import {
   View,
   Input,
   Picker
-} from "native-base"
-import { connect } from "react-redux"
+} from 'native-base'
+import { connect } from 'react-redux'
 import {
   removeShoppingListItem,
   updateItem
-} from "../../../actions/shoppingListActions"
+} from '../../../actions/shoppingListActions'
 
 export interface Props extends DispatchFromProps {
   navigation: NavigationScreenProp<any, any>
@@ -33,15 +33,16 @@ class ItemHighlightScreen extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    const item = this.props.navigation.getParam("item")
+    const item = this.props.navigation.getParam('item')
     this.state = {
       newName: item.name,
-      newQuantity: item.quantity
+      newQuantity: item.quantity,
+      newQuantityType: item.quantityType
     }
   }
 
   render() {
-    const item = this.props.navigation.getParam("item")
+    const item = this.props.navigation.getParam('item')
     return (
       <Container>
         <Header>
@@ -60,7 +61,8 @@ class ItemHighlightScreen extends React.Component<Props, State> {
                 this.props.updateItem(
                   item.id,
                   this.state.newName,
-                  this.state.newQuantity
+                  this.state.newQuantity,
+                  this.state.newQuantityType
                 )
                 this.props.navigation.goBack()
               }}>
@@ -73,50 +75,54 @@ class ItemHighlightScreen extends React.Component<Props, State> {
           <Input
             style={{
               borderBottomWidth: 2,
-              borderColor: "#334393"
+              borderColor: '#334393'
             }}
             onChangeText={newName => this.setState({ newName })}
             value={this.state.newName}
           />
           <View
             style={{
-              flexDirection: "row",
-              marginVertical: 10,
-              width: 300
+              flex: 1,
+              flexDirection: 'row',
+              marginVertical: 10
             }}>
-            <Text style={{ alignSelf: "center", flex: 1 }}>Quantity</Text>
+            <Text style={{ alignSelf: 'center' }}>Quantity</Text>
             <Input
               style={{
                 borderBottomWidth: 2,
-                borderColor: "#334393",
-                width: 5,
-                flex: 1,
-                textAlign: "center"
+                borderColor: '#334393',
+                width: 50,
+                textAlign: 'center'
               }}
               keyboardType='numeric'
               onChangeText={newQuantity => this.setState({ newQuantity })}
               value={this.state.newQuantity}
             />
 
-            <Picker>
-              <Picker.Item label='none' />
-              <Picker.Item label='cups' />
-              <Picker.Item label='pieces' />
-              <Picker.Item label='tbsp' />
-              <Picker.Item label='tsp' />
+            <Picker
+              style={{ flex: 2 }}
+              selectedValue={this.state.newQuantityType}
+              onValueChange={value => {
+                this.setState({ newQuantityType: value })
+              }}>
+              <Picker.Item label='none' value='' />
+              <Picker.Item label='cups' value='cups' />
+              <Picker.Item label='pieces' value='pieces' />
+              <Picker.Item label='tbsp' value='tbsp' />
+              <Picker.Item label='tsp' value='tsp' />
             </Picker>
           </View>
         </Content>
         <View
           style={{
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            flexDirection: "row",
-            justifyContent: "space-around",
+            flexDirection: 'row',
+            justifyContent: 'space-around',
             fontSize: 20,
-            color: "red"
+            color: 'red'
           }}>
           <Button
             transparent
@@ -141,7 +147,12 @@ const mapStateToProps = (state: any): StateFromProps => {
 
 interface DispatchFromProps {
   deleteItem: (id: string) => void
-  updateItem: (id: string, name: string, quantity: number) => void
+  updateItem: (
+    id: string,
+    name: string,
+    quantity: number,
+    quantityType: string
+  ) => void
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchFromProps => {
@@ -149,8 +160,13 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchFromProps => {
     deleteItem: (id: string) => {
       dispatch(removeShoppingListItem(id))
     },
-    updateItem: (id: string, name: string, quantity: number) => {
-      dispatch(updateItem(id, name, quantity))
+    updateItem: (
+      id: string,
+      name: string,
+      quantity: number,
+      quantityType: string
+    ) => {
+      dispatch(updateItem(id, name, quantity, quantityType))
     }
   }
 }
