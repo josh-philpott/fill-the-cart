@@ -1,5 +1,5 @@
-import React from "react"
-import { NavigationScreenProp } from "react-navigation"
+import React from 'react'
+import { NavigationScreenProp } from 'react-navigation'
 import {
   Container,
   Header,
@@ -10,25 +10,25 @@ import {
   Left,
   Text,
   Button
-} from "native-base"
-import { Font, AppLoading } from "expo"
+} from 'native-base'
+import { Font, AppLoading } from 'expo'
 import {
   MenuProvider,
   Menu,
   MenuTrigger,
   MenuOptions,
   MenuOption
-} from "react-native-popup-menu"
-import { connect } from "react-redux"
+} from 'react-native-popup-menu'
+import { connect } from 'react-redux'
 
-import ShoppingList from "./ShoppingList"
-import { GroceryItem } from "../../interfaces/ShoppingList/types"
+import ShoppingList from './ShoppingList'
+import { GroceryItem } from '../../interfaces/ShoppingList/types'
 import {
   deleteAllItems,
   deleteAllInCart,
   selectAllItems,
   unselectAllItems
-} from "../../actions/shoppingListActions"
+} from '../../actions/shoppingListActions'
 
 export interface Props extends DispatchFromProps {
   navigation: NavigationScreenProp<any, any>
@@ -53,14 +53,14 @@ class ShoppingListScreen extends React.Component<Props, State> {
   async componentWillMount() {
     // This needs to be at the highest level of the app
     await Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
     })
     this.setState({ loading: false })
   }
 
   private navigateToItemHighlight(item: GroceryItem): void {
-    this.props.navigation.navigate("ItemHighlight", { item: item })
+    this.props.navigation.navigate('ItemHighlight', { item: item })
   }
 
   render() {
@@ -85,34 +85,12 @@ class ShoppingListScreen extends React.Component<Props, State> {
                   <Icon
                     name='more'
                     style={{
-                      color: "#FFFFFF",
+                      color: '#FFFFFF',
                       padding: 10
                     }}
                   />
                 </MenuTrigger>
                 <MenuOptions>
-                  <MenuOption onSelect={() => this.props.deleteAllInCart()}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        padding: 10,
-                        marginTop: 5,
-                        marginBottom: 5
-                      }}>
-                      Delete All In Cart...
-                    </Text>
-                  </MenuOption>
-                  <MenuOption onSelect={() => this.props.deleteAll()}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        padding: 10,
-                        marginTop: 5,
-                        marginBottom: 5
-                      }}>
-                      Delete All...
-                    </Text>
-                  </MenuOption>
                   <MenuOption onSelect={() => this.props.selectAll()}>
                     <Text
                       style={{
@@ -121,7 +99,7 @@ class ShoppingListScreen extends React.Component<Props, State> {
                         marginTop: 5,
                         marginBottom: 5
                       }}>
-                      Select All...
+                      Select All
                     </Text>
                   </MenuOption>
                   <MenuOption onSelect={() => this.props.unselectAll()}>
@@ -132,7 +110,29 @@ class ShoppingListScreen extends React.Component<Props, State> {
                         marginTop: 5,
                         marginBottom: 5
                       }}>
-                      Unselect All...
+                      Unselect All
+                    </Text>
+                  </MenuOption>
+                  <MenuOption onSelect={() => this.props.deleteAll()}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        padding: 10,
+                        marginTop: 5,
+                        marginBottom: 5
+                      }}>
+                      Delete All
+                    </Text>
+                  </MenuOption>
+                  <MenuOption onSelect={() => this.props.deleteAllInCart()}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        padding: 10,
+                        marginTop: 5,
+                        marginBottom: 5
+                      }}>
+                      Delete All In Cart
                     </Text>
                   </MenuOption>
                 </MenuOptions>
