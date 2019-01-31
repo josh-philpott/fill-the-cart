@@ -38,3 +38,19 @@ export function updateItem(id: string, name: string, quantity: number) {
 export function errorFetchingShoppingList(error: string) {
   return { type: types.ERROR_FETCH_SHOPPING_LIST, error }
 }
+
+export function deleteAllItems() {
+  return { type: types.DELETE_ALL }
+}
+
+export function deleteAllInCart() {
+  return { type: types.DELETE_ALL_IN_CART }
+}
+
+export function selectAllItems() {
+  return { type: types.SELECT_ALL }
+}
+
+export function unselectAllItems() {
+  return { type: types.UNSELECT_ALL }
+}

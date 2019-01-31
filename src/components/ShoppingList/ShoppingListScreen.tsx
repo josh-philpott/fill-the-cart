@@ -19,11 +19,18 @@ import {
   MenuOptions,
   MenuOption
 } from "react-native-popup-menu"
+import { connect } from "react-redux"
 
 import ShoppingList from "./ShoppingList"
 import { GroceryItem } from "../../interfaces/ShoppingList/types"
+import {
+  deleteAllItems,
+  deleteAllInCart,
+  selectAllItems,
+  unselectAllItems
+} from "../../actions/shoppingListActions"
 
-export interface Props {
+export interface Props extends DispatchFromProps {
   navigation: NavigationScreenProp<any, any>
 }
 
@@ -31,7 +38,7 @@ interface State {
   loading: boolean
 }
 
-export default class ShoppingListScreen extends React.Component<Props, State> {
+class ShoppingListScreen extends React.Component<Props, State> {
   static navigationOptions = {
     header: null
   }
@@ -84,7 +91,7 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
                   />
                 </MenuTrigger>
                 <MenuOptions>
-                  <MenuOption onSelect={() => alert(`Delete Items Selected`)}>
+                  <MenuOption onSelect={() => this.props.deleteAllInCart()}>
                     <Text
                       style={{
                         fontSize: 18,
@@ -92,13 +99,10 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
                         marginTop: 5,
                         marginBottom: 5
                       }}>
-                      Delete Items...
+                      Delete All In Cart...
                     </Text>
                   </MenuOption>
-                  <MenuOption
-                    onSelect={() =>
-                      this.props.navigation.navigate("ItemHighlight")
-                    }>
+                  <MenuOption onSelect={() => this.props.deleteAll()}>
                     <Text
                       style={{
                         fontSize: 18,
@@ -106,7 +110,29 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
                         marginTop: 5,
                         marginBottom: 5
                       }}>
-                      Delete Items...
+                      Delete All...
+                    </Text>
+                  </MenuOption>
+                  <MenuOption onSelect={() => this.props.selectAll()}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        padding: 10,
+                        marginTop: 5,
+                        marginBottom: 5
+                      }}>
+                      Select All...
+                    </Text>
+                  </MenuOption>
+                  <MenuOption onSelect={() => this.props.unselectAll()}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        padding: 10,
+                        marginTop: 5,
+                        marginBottom: 5
+                      }}>
+                      Unselect All...
                     </Text>
                   </MenuOption>
                 </MenuOptions>
@@ -119,3 +145,24 @@ export default class ShoppingListScreen extends React.Component<Props, State> {
     )
   }
 }
+
+interface DispatchFromProps {
+  deleteAll: () => void
+  deleteAllInCart: () => void
+  selectAll: () => void
+  unselectAll: () => void
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchFromProps => {
+  return {
+    deleteAll: () => dispatch(deleteAllItems()),
+    deleteAllInCart: () => dispatch(deleteAllInCart()),
+    selectAll: () => dispatch(selectAllItems()),
+    unselectAll: () => dispatch(unselectAllItems())
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ShoppingListScreen)

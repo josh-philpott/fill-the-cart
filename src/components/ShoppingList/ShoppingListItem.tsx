@@ -7,32 +7,12 @@ export interface Props {
   item: GroceryItem
   checked: boolean
   onCheck: (itemKey: string) => void
-  onDelete: (itemKey: string) => void
   onPress: (item: GroceryItem) => void
 }
 
-interface State {
-  checked: boolean
-}
-
-export default class ShoppingListItem extends React.Component<Props, State> {
+export default class ShoppingListItem extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
-    this.state = {
-      checked: props.checked
-    }
-  }
-
-  /**
-   * This is probably an anti-pattern in redux. I'll
-   * come back to this when I have a little more experience
-   */
-  handleCheckClick() {
-    this.setState({ checked: !this.state.checked })
-    //give a little bit for the check animation to start
-    setTimeout(() => {
-      this.props.onCheck(this.props.item.id)
-    }, 10)
   }
 
   buildQuantityString(): string {
@@ -57,8 +37,8 @@ export default class ShoppingListItem extends React.Component<Props, State> {
           this.props.onPress(this.props.item)
         }}>
         <CheckBox
-          onPress={this.handleCheckClick.bind(this)}
-          checked={this.state.checked}
+          onPress={() => this.props.onCheck(this.props.item.id)}
+          checked={this.props.checked}
           hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
         />
         <Body style={{ flexDirection: "row" }}>

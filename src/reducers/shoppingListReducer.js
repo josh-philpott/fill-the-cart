@@ -9,7 +9,11 @@ import {
   RECEIVE_SHOPPING_LIST,
   UPDATE_ITEM,
   ERROR_FETCH_SHOPPING_LIST,
-  REQUEST_SHOPPING_LIST
+  REQUEST_SHOPPING_LIST,
+  DELETE_ALL,
+  DELETE_ALL_IN_CART,
+  SELECT_ALL,
+  UNSELECT_ALL
 } from "../actions/actionTypes"
 
 export default function shoppingList(state = initialState, action) {
@@ -62,6 +66,47 @@ export default function shoppingList(state = initialState, action) {
     }
     case ERROR_FETCH_SHOPPING_LIST: {
     }
+
+    case DELETE_ALL: {
+      return {
+        ...state,
+        items: []
+      }
+    }
+
+    case DELETE_ALL_IN_CART: {
+      let items = state.items
+      items = _.filter(items, item => !item.inCart)
+      return {
+        ...state,
+        items
+      }
+    }
+
+    case SELECT_ALL: {
+      let items = state.items
+      items = _.map(items, item => {
+        item.inCart = true
+        return item
+      })
+      return {
+        ...state,
+        items
+      }
+    }
+
+    case UNSELECT_ALL: {
+      let items = state.items
+      items = _.map(items, item => {
+        item.inCart = false
+        return item
+      })
+      return {
+        ...state,
+        items
+      }
+    }
+
     default:
       return state
   }

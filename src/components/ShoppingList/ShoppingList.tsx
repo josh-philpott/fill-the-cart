@@ -13,7 +13,6 @@ import _ from "lodash"
 import { connect } from "react-redux"
 import {
   addShoppingListItem,
-  removeShoppingListItem,
   toggleItemInCart,
   fetchShoppingList
 } from "../../actions/shoppingListActions"
@@ -49,7 +48,6 @@ class ShoppingList extends React.Component<Props> {
                 item={item}
                 checked={item.inCart}
                 onCheck={this.props.toggleItemInCart}
-                onDelete={this.props.deleteItem}
                 onPress={this.props.onItemClick}
               />
             )}
@@ -120,7 +118,6 @@ const mapStateToProps = (state: any): StateFromProps => {
 
 interface DispatchFromProps {
   addItem: (item: GroceryItem) => void
-  deleteItem: (id: string) => void
   toggleItemInCart: (id: string) => void
   fetchShoppingList: (id: string) => void
 }
@@ -128,7 +125,6 @@ interface DispatchFromProps {
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchFromProps => {
   return {
     addItem: (item: GroceryItem) => dispatch(addShoppingListItem(item)),
-    deleteItem: (id: string) => dispatch(removeShoppingListItem(id)),
     toggleItemInCart: (id: string) => dispatch(toggleItemInCart(id)),
     fetchShoppingList: (id: string) => dispatch(fetchShoppingList(id))
   }
